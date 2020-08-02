@@ -6,7 +6,16 @@ class FooMinion(Minion):
         pass
 
 
-def test_2_basic_minion_battle():
-    with setup_battleground(Side([Minion(1,1)], DUMMY_HERO), Side([Minion(2, 2)], DUMMY_HERO)) as bg:
+def test_basic_minion_battle_1v1():
+    with setup_battleground(Side(DUMMY_HERO, Minion(1,1)), Side(DUMMY_HERO, Minion(2, 2))) as bg:
         bg.start()
         assert bg.side1.is_empty()
+        bg.replay.play()
+
+
+def test_basic_battle_2v2():
+    side1 = Side(DUMMY_HERO, Minion(2,2), Minion(2,2))
+    side2 = Side(DUMMY_HERO, Minion(2, 1), Minion(2,2))
+    with setup_battleground(side1, side2) as bg:
+        bg.start()
+        assert bg.side1.is_empty() and bg.side2.is_empty()
