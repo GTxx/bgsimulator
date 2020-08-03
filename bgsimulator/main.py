@@ -1,9 +1,9 @@
-from _contextvars import ContextVar
-from contextlib import contextmanager
 import random
 
 from enum import Enum
-from typing import Optional, List, Tuple, Union
+from typing import Optional, Tuple, Union
+
+from bgsimulator.context import battleground
 
 
 class Card:
@@ -20,6 +20,7 @@ class MinionType(Enum):
     PIRATE = 6
     NEUTRAL = 7
 
+
 POISON_ATTACK = "POISON"
 
 def normal_attack(minion1: 'Minion', minion2: 'Minion'):
@@ -27,8 +28,13 @@ def normal_attack(minion1: 'Minion', minion2: 'Minion'):
     minion1.be_attacked(minion2.attack_val)
 
 
+def sweep_attack(minion1: 'Minino', minion2: 'Minion'):
+    pass
+
+
+
 class Minion:
-    def __init__(self, attack: Union[int, str], blood, name="", description="", taunt=False, divien_shield=False):
+    def __init__(self, attack: Union[int, str], blood, name="", minion_type= MinionType.NEUTRAL, description="", taunt=False, divien_shield=False):
         self.trie = int
         self.is_gold = False
         self.attack_val = attack
@@ -39,6 +45,7 @@ class Minion:
         self.name = name
         self.taunt = taunt
         self.divien_shield = False
+        self.minion_type = minion_type
 
     @classmethod
     def fuse_to_gold(cls, minion1: 'Minion', minion2: 'Minion', minion3: 'Minion'):
@@ -162,13 +169,8 @@ class BattleGround:
             action_side.minions = [minion for minion in action_side.minions if minion.blood > 0]
             other_side.minions = [minion for minion in other_side.minions if minion.blood > 0]
 
-
-@contextmanager
-def setup_battleground(side1, side2, replay=DUMMY_REPLAY):
-    bg = BattleGround(side1, side2, replay)
-    token = battleground.set(bg)
-    yield bg
-    battleground.reset(token)
-
-
-battleground: ContextVar[BattleGround] = ContextVar("battleground")
+    def get_other_side(self, minion: Minion) -> Side:
+        if minion in self.side1.minions:
+            return self.side2
+        else:
+            return self.side1

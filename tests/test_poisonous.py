@@ -1,4 +1,5 @@
-from bgsimulator.main import Side, DUMMY_HERO2, Minion, DUMMY_HERO1, setup_battleground, POISON_ATTACK
+from bgsimulator.main import Side, DUMMY_HERO2, Minion, DUMMY_HERO1, POISON_ATTACK
+from bgsimulator.context import setup_battleground
 
 
 def test_poisonous():

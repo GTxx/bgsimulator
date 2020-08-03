@@ -1,4 +1,5 @@
-from bgsimulator.main import Minion, Side, setup_battleground, DUMMY_HERO1, DUMMY_HERO2
+from bgsimulator.main import Minion, Side, DUMMY_HERO1, DUMMY_HERO2
+from bgsimulator.context import setup_battleground
 
 
 def test_taunt():

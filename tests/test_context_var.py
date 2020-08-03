@@ -1,5 +1,6 @@
 
-from bgsimulator.main import Side, Minion, battleground, setup_battleground
+from bgsimulator.main import Side, Minion
+from bgsimulator.context import setup_battleground, battleground
 
 
 def test_build_battlground_context():

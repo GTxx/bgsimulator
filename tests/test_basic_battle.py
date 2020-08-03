@@ -1,4 +1,5 @@
-from bgsimulator.main import Minion, setup_battleground, Side, DUMMY_HERO
+from bgsimulator.main import Minion, Side, DUMMY_HERO
+from bgsimulator.context import setup_battleground
 
 
 class FooMinion(Minion):
